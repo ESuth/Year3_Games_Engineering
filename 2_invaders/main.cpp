@@ -1,16 +1,22 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "ship.h"
+#include "game.h"
+#include "bullet.h"
 
 using namespace sf;
 using namespace std;
 Texture spritesheet;
 Sprite invader;
 
-const int gameWidth = 800;
-const int gameHeight = 600;
 
 std::vector<Ship*> ships;
+Player* player;
+bool gameOver;
+Font font;
+Text text;
+
+
 
 void Load() {
     if (!spritesheet.loadFromFile("res/img/invaders_sheet.png")) {
@@ -71,6 +77,8 @@ void Update(RenderWindow& window) {
         s->Update(dt);
     };
 
+    Bullet::Update(dt);
+
     // Quit Via ESC Key
     if (Keyboard::isKeyPressed(Keyboard::Escape)) {
         window.close();
@@ -83,6 +91,8 @@ void Render(RenderWindow& window) {
     for (const auto s : ships) {
         window.draw(*s);
     }
+
+    Bullet::Render(window);
 }
 
 int main() {
