@@ -50,6 +50,7 @@ file(GLOB_RECURSE SOURCES 3_TileEngine/*.cpp 3_TileEngine/*.h)
 add_executable(3_TILE_ENGINE ${SOURCES} )
 target_include_directories(3_TILE_ENGINE SYSTEM PRIVATE ${SFML_INCS})
 target_link_libraries(3_TILE_ENGINE sfml-graphics)
+target_link_libraries(3_TILE_ENGINE lib_tile_level_loader)
 
 set_target_properties(3_TILE_ENGINE 
     PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY
@@ -70,4 +71,4 @@ target_link_libraries(lib_tile_level_loader lib_maths sfml-graphics)
 add_library(lib_maths INTERFACE)
 target_sources(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths/maths.h")
 target_include_directories(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths" SYSTEM INTERFACE ${SFML_INCS})
-target_link_libraries(lib_tile_level_loader lib_maths sfml-graphics)
+

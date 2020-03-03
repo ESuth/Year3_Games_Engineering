@@ -2,15 +2,58 @@
 #include <iostream>
 #include "player.h"
 #include "game.h"
+#include "levelsystem.h"
 
 using namespace sf;
 using namespace std;
 
-Player* player;
+Entity* player;
+
+
+bool validmove(Vector2f pos) {
+    return (ls::getTileAt(pos) != ls::WALL);
+}
+
+bool endGame(Vector2f pos) {
+    return (ls::getTileAt(pos) == ls::END);
+}
+
+void Reset()
+{
+    player = new Player();
+
+    ls::loadLevelFile("res/maze_2.txt");
+
+    // Print the level to the console
+    for (size_t y = 0; y < ls::getHeight(); ++y) {
+        for (size_t x = 0; x < ls::getWidth(); ++x) {
+            cout << ls::getTile({ x, y });
+            if (ls::getTile({ x, y }) == ls::START) {
+                player->setPosition(ls::getTilePosition({ x, y }) + Vector2f(30.0f, 30.0f));
+            }
+        }
+        cout << endl;
+    }
+
+}
 
 void Load() 
 {
-    player = new Player();  
+    player = new Player();
+
+    ls::loadLevelFile("res/maze_2.txt");
+
+    // Print the level to the console
+    for (size_t y = 0; y < ls::getHeight(); ++y) {
+        for (size_t x = 0; x < ls::getWidth(); ++x) {
+            cout << ls::getTile({ x, y });
+            if (ls::getTile({ x, y }) == ls::START) {
+                player->setPosition(ls::getTilePosition({ x, y }) + Vector2f(30.0f, 30.0f));
+            }
+        }
+        cout << endl;
+    }
+
 }
 
 void Update(RenderWindow& window) 
@@ -28,7 +71,15 @@ void Update(RenderWindow& window)
         }
     }
 
+    sf::Vector2f previous = player->getPosition();
+
     player->Update(dt);
+
+    if (!validmove(player->getPosition()))
+        player->setPosition(previous);
+
+    if (endGame(player->getPosition()))
+        Reset();
 
     // Quit Via ESC Key
     if (Keyboard::isKeyPressed(Keyboard::Escape)) {
@@ -40,6 +91,7 @@ void Update(RenderWindow& window)
 void Render(RenderWindow& window) 
 {
     player->Render(window);
+    ls::Render(window);
 }
 
 int main() 
