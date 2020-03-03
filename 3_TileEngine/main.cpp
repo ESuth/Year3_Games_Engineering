@@ -8,15 +8,13 @@ using namespace std;
 
 Player* player;
 
-void Load() {
-
-    player = new Player();
-
-    
+void Load() 
+{
+    player = new Player();  
 }
 
-void Update(RenderWindow& window) {
-
+void Update(RenderWindow& window) 
+{
     // Reset clock, recalculate deltatime
     static Clock clock;
     float dt = clock.restart().asSeconds();
@@ -36,24 +34,27 @@ void Update(RenderWindow& window) {
     if (Keyboard::isKeyPressed(Keyboard::Escape)) {
         window.close();
     }
-
 }
 
 
-void Render(RenderWindow& window) {
-
+void Render(RenderWindow& window) 
+{
     player->Render(window);
-
 }
 
-int main() {
+int main() 
+{
     RenderWindow window(VideoMode(gameWidth, gameHeight), "Tile Engine");
+
     Load();
-    while (window.isOpen()) {
+
+    while (window.isOpen()) 
+    {
         window.clear();
         Update(window);
         Render(window);
         window.display();
     }
+
     return 0;
 }
