@@ -59,6 +59,20 @@ set_target_properties(3_TILE_ENGINE
 
  add_dependencies(3_TILE_ENGINE copy_resources)
 
+#### PacMan ####
+file(GLOB_RECURSE SOURCES 4_PacMan/*.cpp 4_PacMan/*.h)
+add_executable(4_PACMAN ${SOURCES} )
+target_include_directories(4_PACMAN SYSTEM PRIVATE ${SFML_INCS})
+target_link_libraries(4_PACMAN sfml-graphics)
+target_link_libraries(4_PACMAN lib_tile_level_loader)
+
+set_target_properties(4_PACMAN 
+    PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration)
+)
+
+ add_dependencies(4_PACMAN copy_resources)
+
 
 
 ## Tile loader lib

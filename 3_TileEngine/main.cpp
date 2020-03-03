@@ -7,6 +7,7 @@
 using namespace sf;
 using namespace std;
 
+
 Entity* player;
 
 
